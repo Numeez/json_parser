@@ -1,11 +1,11 @@
-#![allow(dead_code,unused)]
+#![allow(dead_code, unused)]
 
 use crate::lexer::Lexer;
 use crate::models::Token;
 
-fn tokenize(input: &str) -> Vec<Token> {
+pub fn tokenize(input: &str) -> Vec<Token> {
     let mut lexer = Lexer::new(input);
-    let mut token: Vec<Token> = vec![];
+    let mut tokens: Vec<Token> = vec![];
     loop {
         match lexer.current() {
             None => break,
@@ -14,49 +14,55 @@ fn tokenize(input: &str) -> Vec<Token> {
             }
             Some(b'[') => {
                 lexer.advance();
-                token.push(Token::LeftBracket);
+                tokens.push(Token::LeftBracket);
             }
             Some(b']') => {
                 lexer.advance();
-                token.push(Token::RightBracket);
+                tokens.push(Token::RightBracket);
             }
             Some(b'{') => {
                 lexer.advance();
-                token.push(Token::LeftBrace);
+                tokens.push(Token::LeftBrace);
             }
             Some(b'}') => {
                 lexer.advance();
-                token.push(Token::RightBrace);
+                tokens.push(Token::RightBrace);
             }
             Some(b':') => {
                 lexer.advance();
-                token.push(Token::Colon);
+                tokens.push(Token::Colon);
             }
             Some(b',') => {
                 lexer.advance();
-                token.push(Token::Comma);
+                tokens.push(Token::Comma);
             }
-            Some(b'"')=>{
+            Some(b'"') => {
                 let string = lexer.read_string();
-                token.push(Token::StringToken(string));
+                tokens.push(Token::StringToken(string));
             }
-            Some(b't')=>{
+            Some(b't') => {
                 lexer.read_keyword("true");
-                token.push(Token::True)
+                tokens.push(Token::True)
             }
-            Some(b'f')=>{
+            Some(b'f') => {
                 lexer.read_keyword("false");
-                token.push(Token::False)
+                tokens.push(Token::False)
             }
-            Some(b'-') | Some(b'0'..=b'9')=>{
+            Some(b'n') => {
+                lexer.read_keyword("null");
+                tokens.push(Token::Null);
+            }
+            Some(b'-') | Some(b'0'..=b'9') => {
                 let num = lexer.read_number();
-                token.push(Token::NumberToken(num));
+                tokens.push(Token::NumberToken(num));
             }
             Some(c) => {
-                panic!("Unexpected character while reading the input: {}",c as char)
+                panic!(
+                    "Unexpected character while reading the input: {}",
+                    c as char
+                )
             }
         }
     }
-
-    todo!()
+    tokens
 }
