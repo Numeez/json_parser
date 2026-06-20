@@ -1,6 +1,7 @@
-use crate::models::{JsonValue,Token};
+#![allow(unused,dead_code)]
 
-fn parse(tokens:&[Token])->JsonValue{
+use crate::models::{JsonValue, Token};
+
+fn parse(tokens: &[Token]) -> JsonValue {
     todo!()
-
 }

@@ -1,6 +1,7 @@
+mod lexer;
 mod models;
-mod tokenize;
 mod parse;
+mod tokenize;
 
 fn main() {
     let input = r#"
@@ -10,5 +11,4 @@ fn main() {
      "active": true
     }
     "#;
-
 }

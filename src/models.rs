@@ -1,4 +1,6 @@
- pub enum Token {
+#![allow(unused,dead_code)]
+
+pub enum Token {
     LeftBrace,
     RightBrace,
     LeftBracket,
